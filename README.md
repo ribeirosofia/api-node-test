@@ -71,4 +71,9 @@
   </li>
 </ul>
 
-
+<p>To install the password encryptor, it's necessary to run the follow command line:</p>
+<ul>
+  <li>
+  npm install bcryptjs --save
+  </li>
+</ul>

@@ -11,8 +11,12 @@ class UsersController {
       if(checkUserExists){
         throw new AppError("Este e-mail já está cadastrado.");
       }
+      await database.run("INSERT INTO users (name, email, password) VALUES(?,?, ?)",
+        [name, email, password]
+      ); 
       return response.status(201).json();
     }
+
   }
   
   module.exports = UsersController;

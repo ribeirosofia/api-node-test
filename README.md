@@ -51,7 +51,24 @@
 <p>To install the library for async errors it's necessary to run the followind command line:</p>
 
 <ul>
-<li>
-npm install express-async-errors --save
-</li>
+  <li>
+  npm install express-async-errors --save
+  </li>
 </ul>
+
+<p>To install the dependencies for the SQLite database, it's necessary to run the following command line:</p>
+<ul>
+  <li>
+  npm install sqlite3 sqlite --save
+  </li>
+</ul>
+
+<p>To organize the database storage, it's necessary to download the following editor:</p>
+
+<ul>
+  <li>
+  <a href="https://www.beekeeperstudio.io/">Beekeeper</a>
+  </li>
+</ul>
+
+

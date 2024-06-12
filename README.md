@@ -1,4 +1,4 @@
-<h1 align="center">API Node Test</h1>
+<h1 align="center">Rocketnotes API </h1>
 
 <p align="center">This program is being developed to test habilities in node environment.</p>
 

@@ -101,3 +101,8 @@
 <ul>
   <li>npx knex migrate:make createTags</li>
 </ul>
+
+<p>To create new links using query builder knex and migrations, it's necessary to run the following command line:</p>
+<ul>
+  <li>npx knex migrate:make createLinks</li>
+</ul>

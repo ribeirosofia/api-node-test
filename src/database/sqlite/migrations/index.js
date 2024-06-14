@@ -5,9 +5,13 @@ async function migrationsRun(){
     const schemas = [
         createUsers  
     ].join('');
-    sqliteConnection()
-    .then(db => db.exec(schemas))
-    .catch(error => console.error(error));
+    try {
+        const db = await sqliteConnection();
+        await db.exec(schemas);
+        console.log("Database migration ran successfully");
+    } catch (error) {
+        console.error("Error running migrations:", error);
+    }
 }
 
 module.exports = migrationsRun;

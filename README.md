@@ -85,3 +85,14 @@
 <ul>
   <li>npx knex init</li>
 </ul>
+
+<p>To create new notes using query builder knex and migrations, it's necessary to run the following command line:</p>
+<ul>
+  <li>npx knex migrate:make createNotes</li>
+</ul>
+
+<p>To run the knex migrations, it's necessary to run the following command line:</p>
+<ul>
+  <li>npx knex migrate:latest</li>
+  <li>migrate</li>
+</ul>

@@ -96,3 +96,8 @@
   <li>npx knex migrate:latest</li>
   <li>migrate</li>
 </ul>
+
+<p>To create new tags using query builder knex and migrations, it's necessary to run the following command line:</p>
+<ul>
+  <li>npx knex migrate:make createTags</li>
+</ul>

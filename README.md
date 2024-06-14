@@ -71,11 +71,11 @@
   </li>
 </ul>
 
-<p>To install the knex query builder, it's necessary to go to the <a href="https://knexjs.org/guide/">Knex Guide</a>.</p>
-
 <p>To install the password encryptor, it's necessary to run the follow command line:</p>
 <ul>
   <li>
   npm install bcryptjs --save
   </li>
 </ul>
+
+<p>To install the knex query builder, it's necessary to go to the <a href="https://knexjs.org/guide/">Knex Guide</a>.</p>

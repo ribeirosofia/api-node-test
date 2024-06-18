@@ -63,6 +63,27 @@ class NotesController {
             response.status(500).json({ error: 'Internal server error' });
         }
     }
+
+    async delete(request, response) {
+        const { id } = request.params;
+
+        try {
+            await knex("notes").where({ id }).delete();
+            response.json({ message: 'Note deleted successfully' });
+        } catch (error) {
+            console.error('Error deleting note:', error);
+            response.status(500).json({ error: 'Internal server error' });
+        }
+    }
+
+    async index(request, response) {
+        const { user_id } = request.query;
+        const notes = await knex("notes")
+        .where({ user_id })
+        .orderBy("title");
+
+        return response.json({ notes });
+    }
 }
 
 module.exports = NotesController;

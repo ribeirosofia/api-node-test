@@ -85,17 +85,34 @@ class NotesController {
             if(tags){
                 const filterTags = tags.split(',').map(tag => tag.trim());
                 notes = await knex("tags")
-                .whereIn("name", filterTags);
+                .select([
+                    "notes.id",
+                    "notes.title",
+                    "notes.user_id"
+                ])
+                .where("notes.user_id", user_id)
+                .whereLike("notes.title", `%${title}%`)
+                .whereIn("name", filterTags)
+                .innerJoin("notes", "notes.id", "tags.note_id")
+                .orderBy("notes.title")
 
             } else{
-
+                notes = await knex("notes")
+                .where({ user_id })
+                .whereLike("title", `%${title}%`)
+                .orderBy("title");
             }
             
-            notes = await knex("notes")
-            .where({ user_id })
-            .whereLike("title", `%${title}%`)
-            .orderBy("title");
-            response.json({ notes });
+            const userTags = await knex("tags").where({user_id})
+            const notesWithTags = notes.map( note => {
+                const noteTags = userTags.filter(tag => tag.note_id === note.id)
+                return {
+                    ...note,
+                    tags: noteTags
+                }
+            } )
+
+            response.json(notesWithTags);
         } catch(error){
             console.error('Error fetching notes:', error);
             response.status(500).json({ error: 'Internal server error' });

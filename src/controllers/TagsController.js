@@ -6,6 +6,7 @@ class TagsController{
         try{
             const tags = await knex("tags")
             .where({user_id});
+            console.log(tags);
             return response.json(tags);
         } catch(error){
             console.error('Error fetching notes:', error);

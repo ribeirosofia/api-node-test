@@ -1,8 +1,8 @@
 const sqliteConnection = require('../../sqlite');
 const createUsers = require('./createUsers');
-const createNotes = require('./createNotes');
-const createTags = require('./createTags');
-const createLinks = require('./createLinks');
+// const createNotes = require('./createNotes');
+// const createTags = require('./createTags');
+// const createLinks = require('./createLinks');
 
 const dropTables = `
     DROP TABLE IF EXISTS links;
@@ -14,9 +14,9 @@ const dropTables = `
 async function migrationsRun() {
     const schemas = [
         createUsers,
-        createNotes,
-        createTags,
-        createLinks
+        // createNotes,
+        // createTags,
+        // createLinks
     ].join('');
 
     sqliteConnection()

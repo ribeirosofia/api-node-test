@@ -41,22 +41,19 @@ class NotesController {
 
         try {
             const note = await knex("notes").where({ id }).first();
-            console.log('Note:', note);
 
             if (!note) {
                 return response.status(404).json({ error: 'Note not found' });
             }
 
+            
             const tags = await knex("tags").where({ note_id: id }).orderBy("name");
-            console.log('Tags:', tags);
-
             const links = await knex("links").where({ note_id: id }).orderBy("created_at");
-            console.log('Links:', links);
 
             return response.json({
                 ...note,
-                tags,
-                links
+                tags: tags.map(tag => ({ name: tag.name })),
+                links: links.map(link => ({ url: link.url }))
             });
         } catch (error) {
             console.error('Error fetching note:', error);
@@ -90,10 +87,11 @@ class NotesController {
                     "notes.title",
                     "notes.user_id"
                 ])
+                .innerJoin("notes", "notes.id", "tags.note_id")
                 .where("notes.user_id", user_id)
                 .whereLike("notes.title", `%${title}%`)
                 .whereIn("name", filterTags)
-                .innerJoin("notes", "notes.id", "tags.note_id")
+                .groupBy("notes.id")
                 .orderBy("notes.title")
 
             } else{
@@ -102,17 +100,26 @@ class NotesController {
                 .whereLike("title", `%${title}%`)
                 .orderBy("title");
             }
-            
-            const userTags = await knex("tags").where({user_id})
-            const notesWithTags = notes.map( note => {
-                const noteTags = userTags.filter(tag => tag.note_id === note.id)
+
+            const noteIds = notes.map(note => note.id);
+            const tags = await knex("tags")
+            .whereIn("note_id", noteIds);
+
+            const links = await knex("links")
+            .whereIn("note_id", noteIds);
+
+            const notesWithTagsAndLinks = notes.map(note => {
+                const noteTags = tags.filter(tag => tag.note_id === note.id);
+                const noteLinks = links.filter(link => link.note_id === note.id);
                 return {
                     ...note,
-                    tags: noteTags
-                }
-            } )
+                    tags: noteTags.map(tag => ({ name: tag.name })),
+                    links: noteLinks.map(link => ({ url: link.url }))
+                };
+            });
 
-            response.json(notesWithTags);
+            response.json(notesWithTagsAndLinks);
+            
         } catch(error){
             console.error('Error fetching notes:', error);
             response.status(500).json({ error: 'Internal server error' });
